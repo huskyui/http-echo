@@ -10,3 +10,36 @@ http-echo -listen=:8080 -text="hello world"
 ```
 
 Then visit http://localhost:8080/ in your browser.
+
+## 使用docker进行测试
+```
+docker run -p 8080:8080 hashicorp/http-echo -listen=:8080 -text="hello world"
+```
+## kubernets方式 example
+```
+kind: Pod
+apiVersion: v1
+metadata:
+  name: apple-app
+  labels:
+    app: apple
+spec:
+  containers:
+    - name: apple-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=apple"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 5678 # Default port for image
+
+```
